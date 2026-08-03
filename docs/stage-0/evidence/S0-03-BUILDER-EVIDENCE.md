@@ -72,7 +72,9 @@ Negative tests cover the original cases plus every mutation demonstrated by the 
 - Builder state: `evidence_ready`.
 - Product/domain review: `PASS` on the failed revision; product-owner completion approval remains required.
 - Independent technical verdict: prior `FAIL`; fresh verdict pending on this remediation revision.
-- GitHub Actions result: pending branch publication.
+- Published implementation commit: `3c0717f888c16e4372260f1072b557697a581062`.
+- Draft remediation pull request: <https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/pull/5>.
+- GitHub Actions on the published implementation: `PASS`, run <https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/actions/runs/30843704738>.
 - S0-03 must not become `passed` until the exact reviewed revision, verdict, remediation history, and GitHub checkpoint are recorded.
 
 ## Known limitations and residual risk

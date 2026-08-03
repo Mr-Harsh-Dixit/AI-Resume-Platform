@@ -120,6 +120,12 @@
           "taxonomy_schema_semantic_source_verifier": "PASS",
           "reviewer_mutation_replay": "PASS - 7 of 7 rejected"
         },
+        "published_candidate": {
+          "implementation_commit": "3c0717f888c16e4372260f1072b557697a581062",
+          "pull_request_url": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/pull/5",
+          "ci_result": "PASS",
+          "ci_run_url": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/actions/runs/30843704738"
+        },
         "fresh_independent_review_required": true
       }
     },
