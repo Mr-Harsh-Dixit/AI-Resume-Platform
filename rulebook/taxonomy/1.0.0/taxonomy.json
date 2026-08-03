@@ -3,7 +3,7 @@
   "schema_version": "1.0.0",
   "taxonomy_id": "resume-rule-taxonomy",
   "taxonomy_version": "1.0.0",
-  "status": "candidate",
+  "status": "approved",
   "source_baseline_id": "S0-SOURCE-BASELINE-001",
   "primary_class_cardinality": "exactly_one",
   "classes": [

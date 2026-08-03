@@ -18,9 +18,9 @@ Status values follow the [delivery workflow](../governance/DELIVERY_WORKFLOW.md)
 |---|---|---|---|---|
 | S0-01 | Confirm commercial usage rights | Owner/rights statement and permitted uses | `passed` | DEC-S0-001, product-owner review evidence, PR #1 checkpoint |
 | S0-02 | Freeze the baseline | Immutable source manifest, checksum, storage URI, change policy | `passed` | Product-owner PASS in `evidence/S0-02-REVIEW.md` and PR #4 checkpoint |
-| S0-03 | Create rule taxonomy | Versioned classes: hard, strong default, situational, scoring, example, explanatory | `evidence_ready` | Product/domain PASS retained; two technical FAILs retained; locator remediation cycle 2 and fresh review required |
-| S0-04 | Assign rule IDs | Stable IDs, source page/section, rationale, test condition | `not_started` | S0-03 |
-| S0-05 | Define precedence | Machine-testable truth/privacy-to-aesthetics ordering | `not_started` | S0-03 |
+| S0-03 | Create rule taxonomy | Versioned classes: hard, strong default, situational, scoring, example, explanatory | `passed` | Fresh independent PASS on commit `5656b394bd016d90abffe7d92f12ff583dac79b9`; PR #5 checkpoint |
+| S0-04 | Assign rule IDs | Stable IDs, source page/section, rationale, test condition | `not_started` | Unblocked by S0-03; focused implementation and review required |
+| S0-05 | Define precedence | Machine-testable truth/privacy-to-aesthetics ordering | `not_started` | Unblocked by S0-03; focused implementation and review required |
 | S0-06 | Define occupation-profile contract | Versioned schema and review fields | `not_started` | Reviewer ownership |
 | S0-07 | Select launch profiles | Bounded approved launch set and review evidence | `blocked` | DEC-S0-003 and DEC-S0-004 |
 | S0-08 | Define sensitive-field policy | Purpose, consent, display, retention, and prohibited scopes | `not_started` | S0-06 and S0-07 |

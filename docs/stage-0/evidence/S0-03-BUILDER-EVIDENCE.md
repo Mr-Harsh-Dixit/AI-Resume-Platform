@@ -79,22 +79,22 @@ Remediation cycle 2:
 - Stage 0 control-plane verification: PASS.
 - Rule-taxonomy schema, semantic-lock, and source-binding verification: PASS.
 - Whitespace/error-marker check: PASS.
-- Builder evidence is ready; another fresh independent review is still required.
+- Builder evidence was accepted by a fresh independent review of exact commit `5656b394bd016d90abffe7d92f12ff583dac79b9`.
 
 ## Review and completion state
 
-- Builder state: `evidence_ready`.
-- Product/domain review: `PASS` on the failed revision; product-owner completion approval remains required.
-- Independent technical verdict: two retained `FAIL` verdicts; another fresh verdict is required after cycle 2.
-- Published implementation commit: `3c0717f888c16e4372260f1072b557697a581062`.
-- Draft remediation pull request: <https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/pull/5>.
-- GitHub Actions on the published implementation: `PASS`, run <https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/actions/runs/30843704738>.
-- PR #5 remains unmerged. S0-03 must not become `passed` until the exact remediated revision receives a fresh PASS and its GitHub checkpoint is recorded.
+- Step state: `passed` after independent review and the reviewed GitHub checkpoint.
+- Product/domain review: retained `PASS`.
+- Independent technical and overall verdict: `PASS` on exact commit `5656b394bd016d90abffe7d92f12ff583dac79b9`.
+- Retained PASS evidence: `docs/stage-0/evidence/S0-03-REVIEW-PASS-2026-08-04.md`.
+- Pull request checkpoint: <https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/pull/5>.
+- GitHub Actions on the reviewed commit: `PASS`, run <https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/actions/runs/30851539272>.
+- The product owner authorized formal recording and preparation of PR #5 for merge. Stage 0 remains incomplete.
 
 ## Known limitations and residual risk
 
-- The taxonomy is a candidate and contains no production rule records yet.
+- The approved taxonomy contains no production rule records yet.
 - Source classification still requires human domain judgment during S0-04.
 - The taxonomy prevents scoring from overriding hard rules but does not define full cross-rule authority precedence; S0-05 owns that contract.
-- The semantic lock makes changes review-visible; it does not authorize a changed lock. This correction is to an unapproved candidate and requires fresh review. After acceptance, any semantic or locator update requires a new version and fresh review.
+- The semantic lock makes changes review-visible; it does not authorize a changed lock. After acceptance, any semantic or locator update requires a new version and fresh review.
 - The controlled locator index covers only the source sections used by S0-03. S0-04 must add versioned, reviewed locators for production rule records.
