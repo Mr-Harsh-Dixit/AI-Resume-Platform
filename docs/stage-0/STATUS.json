@@ -3,7 +3,7 @@
   "stage_id": "S0",
   "stage_name": "Product, rights and rulebook baseline",
   "stage_state": "blocked_entry_conditions",
-  "updated_on": "2026-08-03",
+  "updated_on": "2026-08-04",
   "source_specification": {
     "source_id": "SPEC-1.3",
     "pages": [19, 20, 21],
@@ -86,10 +86,42 @@
       "evidence": [
         "docs/stage-0/RULE_TAXONOMY.md",
         "docs/stage-0/evidence/S0-03-BUILDER-EVIDENCE.md",
+        "docs/stage-0/evidence/S0-03-REVIEW-FAIL-2026-08-03.md",
         "rulebook/schemas/rule-taxonomy.schema.json",
         "rulebook/taxonomy/1.0.0/taxonomy.json",
+        "rulebook/taxonomy/1.0.0/semantic-lock.json",
+        "rulebook/sources/1.0.0/source-locator-index.json",
+        "requirements/verification.txt",
         "tests/test_rule_taxonomy.py"
-      ]
+      ],
+      "review_history": [
+        {
+          "reviewer": "Codex independent review instance - not the implementing agent",
+          "reviewed_commit": "8f90f2a474bad9f95e47f33655f3847fc0e7694d",
+          "verdict": "FAIL",
+          "product_domain_verdict": "PASS",
+          "technical_verdict": "FAIL",
+          "verdict_on": "2026-08-03",
+          "evidence": "docs/stage-0/evidence/S0-03-REVIEW-FAIL-2026-08-03.md"
+        }
+      ],
+      "remediation": {
+        "cycle": 1,
+        "state": "evidence_ready",
+        "findings": [
+          "JSON Schema engine was not applied",
+          "Prompt and same-version semantic drift were not enforced",
+          "Source page, section, and checksum drift were accepted",
+          "Required negative regression paths were missing"
+        ],
+        "local_validation": {
+          "unit_tests": "PASS - 34 tests",
+          "stage0_control_plane": "PASS",
+          "taxonomy_schema_semantic_source_verifier": "PASS",
+          "reviewer_mutation_replay": "PASS - 7 of 7 rejected"
+        },
+        "fresh_independent_review_required": true
+      }
     },
     {
       "id": "S0-04",

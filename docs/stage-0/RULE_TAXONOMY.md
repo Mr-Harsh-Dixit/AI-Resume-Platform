@@ -30,11 +30,14 @@ This ordering prevents illustrative text from accidentally becoming executable l
 ## Enforcement boundaries
 
 - Prompts and model output cannot change a rule's class.
+- The root AI-authority policy makes model output provisional and requires deterministic validation.
 - A numeric readiness result cannot override a hard failure.
 - Strong-default exceptions require an authority, reason, bound context, and regression test.
 - Situational rules cannot run without context and cannot silently fall back to generic behavior.
 - Examples never populate candidate evidence, metrics, titles, credentials, claims, or generated wording.
 - Explanatory guidance requires a new versioned rule record and review before it can become enforceable.
+- A canonical semantic fingerprint rejects same-version changes to classifications, decision logic, invariants, source bindings, or enforcement policy.
+- Source references must match frozen SHA-256 checksums and a manually verified section/page index.
 
 ## Deliberate exclusions
 
@@ -53,4 +56,4 @@ S0-03 does not:
 
 ## Review state
 
-Status: `evidence_ready`. Automated structural and semantic-invariant checks are required before review. The taxonomy remains `candidate` until a non-builder technical reviewer and the product owner approve it.
+Status: `evidence_ready`. The first independent review passed the product/domain design and failed the technical enforcement on commit `8f90f2a474bad9f95e47f33655f3847fc0e7694d`. Remediation adds actual Draft 2020-12 validation, prompt-authority controls, semantic locking, checksum binding, controlled locators, and negative regression tests. The taxonomy remains `candidate` until a fresh non-builder technical review and product-owner approval.

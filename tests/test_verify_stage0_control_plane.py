@@ -40,6 +40,22 @@ class Stage0ControlPlaneTests(unittest.TestCase):
         with self.assertRaisesRegex(CONTROL.ControlPlaneError, "review evidence"):
             CONTROL.validate_baseline(baseline)
 
+    def test_review_history_rejects_invalid_reviewed_commit(self) -> None:
+        status = copy.deepcopy(self.status)
+        status["steps"][2]["review_history"][0]["reviewed_commit"] = "short"
+
+        with self.assertRaisesRegex(CONTROL.ControlPlaneError, "full reviewed Git object ID"):
+            CONTROL.validate_status(status, self.baseline)
+
+    def test_review_history_requires_retained_evidence(self) -> None:
+        status = copy.deepcopy(self.status)
+        status["steps"][2]["review_history"][0]["evidence"] = (
+            "docs/stage-0/evidence/does-not-exist.md"
+        )
+
+        with self.assertRaisesRegex(CONTROL.ControlPlaneError, "missing review evidence"):
+            CONTROL.validate_status(status, self.baseline)
+
     def test_passed_step_accepts_reviewed_sha1_git_checkpoint(self) -> None:
         status = copy.deepcopy(self.status)
         step = status["steps"][1]

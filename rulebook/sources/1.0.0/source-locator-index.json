@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "source_baseline_id": "S0-SOURCE-BASELINE-001",
+  "verification": {
+    "method": "manual_source_review",
+    "reviewed_on": "2026-08-03",
+    "evidence_path": "docs/stage-0/evidence/S0-03-REVIEW-FAIL-2026-08-03.md"
+  },
+  "sources": [
+    {
+      "source_id": "HANDBOOK-1.0",
+      "source_sha256": "05927b5fb2f4dc4ff44e7026a751c84e97ce5332f88d1fe48eda07ec19839fd8",
+      "page_count": 38,
+      "locators": [
+        {"section": "Scope and limits", "pages": [2]},
+        {"section": "The constraint hierarchy", "pages": [7]},
+        {"section": "Hard, strong, and situational rules", "pages": [21]},
+        {"section": "Non-negotiable truth rules", "pages": [27]},
+        {"section": "Responsible use of generative AI", "pages": [28]},
+        {"section": "The 100-point Resume Quality Index", "pages": [29]}
+      ]
+    },
+    {
+      "source_id": "SPEC-1.3",
+      "source_sha256": "4afd26ce2d57362d8ab3e5fc334ee20a896dda5db844420fdf50ff8606e75b35",
+      "page_count": 61,
+      "locators": [
+        {"section": "4.4 Rule categories", "pages": [16]},
+        {"section": "Stage 0 detailed implementation steps", "pages": [19, 20]},
+        {"section": "Stage 0 precautions", "pages": [20]},
+        {"section": "Stage 0 exit gate", "pages": [21]}
+      ]
+    }
+  ]
+}

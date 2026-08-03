@@ -7,7 +7,7 @@ This repository is the controlled implementation workspace for the AI Resume Pla
 - Stage: `S0 - Product, rights and rulebook baseline`
 - State: `BLOCKED_ENTRY_CONDITIONS`
 - Application code: intentionally not started
-- Active package: Stage 0 control plane and source baseline candidate
+- Active package: S0-03 rule-taxonomy remediation and fresh review
 - GitHub remote: public `Mr-Harsh-Dixit/AI-Resume-Platform`
 
 The specification requires Stage 0 to close before Stage 1 design and before application code depends on resume rules. Preparatory artifacts may be built while an entry condition is unresolved, but they cannot be reported as passed.
@@ -33,11 +33,13 @@ See [delivery workflow](docs/governance/DELIVERY_WORKFLOW.md), [Stage 0 status](
 
 ## Local verification
 
-Run the dependency-free control-plane checks from the repository root:
+Install the pinned verification dependency and run the checks from the repository root:
 
 ```powershell
+python -m pip install -r requirements/verification.txt
 python -m unittest discover -s tests -v
 python tools/verify_stage0_control_plane.py
+python tools/verify_rule_taxonomy.py
 ```
 
-These checks enforce status integrity, required traceability IDs, safe source metadata, and the rule that no step or stage may pass without review and GitHub evidence.
+These checks apply Draft 2020-12 JSON Schema validation, enforce status integrity and source bindings, reject same-version taxonomy drift, and prevent any step or stage from passing without review and GitHub evidence.

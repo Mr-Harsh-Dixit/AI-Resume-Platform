@@ -19,9 +19,23 @@ class RuleTaxonomyTests(unittest.TestCase):
         self.taxonomy = TAXONOMY.load_object(TAXONOMY.TAXONOMY_PATH)
         self.schema = TAXONOMY.load_object(TAXONOMY.SCHEMA_PATH)
         self.baseline = TAXONOMY.load_object(TAXONOMY.BASELINE_PATH)
+        self.locator_index = TAXONOMY.load_object(TAXONOMY.LOCATOR_INDEX_PATH)
+        self.semantic_lock = TAXONOMY.load_object(TAXONOMY.SEMANTIC_LOCK_PATH)
 
-    def validate(self, taxonomy: dict | None = None) -> None:
-        TAXONOMY.validate_taxonomy(taxonomy or self.taxonomy, self.schema, self.baseline)
+    def validate(
+        self,
+        taxonomy: dict | None = None,
+        baseline: dict | None = None,
+        locator_index: dict | None = None,
+        semantic_lock: dict | None = None,
+    ) -> None:
+        TAXONOMY.validate_taxonomy(
+            taxonomy if taxonomy is not None else self.taxonomy,
+            self.schema,
+            baseline if baseline is not None else self.baseline,
+            locator_index if locator_index is not None else self.locator_index,
+            semantic_lock if semantic_lock is not None else self.semantic_lock,
+        )
 
     def test_repository_taxonomy_is_valid(self) -> None:
         self.validate()
@@ -30,7 +44,7 @@ class RuleTaxonomyTests(unittest.TestCase):
         taxonomy = copy.deepcopy(self.taxonomy)
         taxonomy["classes"].append(copy.deepcopy(taxonomy["classes"][0]))
 
-        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "unique"):
+        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "JSON Schema validation"):
             self.validate(taxonomy)
 
     def test_hard_rule_cannot_allow_exception(self) -> None:
@@ -76,36 +90,102 @@ class RuleTaxonomyTests(unittest.TestCase):
         taxonomy = copy.deepcopy(self.taxonomy)
         taxonomy["unclassified_result"] = "choose_strong_default"
 
-        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "fail closed"):
+        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "JSON Schema validation"):
             self.validate(taxonomy)
 
     def test_taxonomy_rejects_unknown_source(self) -> None:
         taxonomy = copy.deepcopy(self.taxonomy)
         taxonomy["source_references"][0]["source_id"] = "UNKNOWN-1.0"
 
-        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "unknown source"):
+        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "frozen sources exactly"):
             self.validate(taxonomy)
 
     def test_taxonomy_rejects_unknown_root_field(self) -> None:
         taxonomy = copy.deepcopy(self.taxonomy)
         taxonomy["prompt_override"] = True
 
-        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "root"):
+        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "JSON Schema validation"):
             self.validate(taxonomy)
 
     def test_taxonomy_rejects_unknown_class_field(self) -> None:
         taxonomy = copy.deepcopy(self.taxonomy)
         taxonomy["classes"][0]["allow_prompt_override"] = True
 
-        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "unknown fields"):
+        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "JSON Schema validation"):
             self.validate(taxonomy)
 
     def test_context_axes_must_be_unique(self) -> None:
         taxonomy = copy.deepcopy(self.taxonomy)
         taxonomy["context_axes"].append(taxonomy["context_axes"][0])
 
-        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "Context axes must be unique"):
+        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "JSON Schema validation"):
             self.validate(taxonomy)
+
+    def test_draft_2020_12_rejects_invalid_cannot_override_value(self) -> None:
+        taxonomy = copy.deepcopy(self.taxonomy)
+        strong = next(item for item in taxonomy["classes"] if item["class_id"] == "strong_default")
+        strong["cannot_override"].append("nonsense")
+
+        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "JSON Schema validation"):
+            self.validate(taxonomy)
+
+    def test_draft_2020_12_rejects_duplicate_prohibited_use(self) -> None:
+        taxonomy = copy.deepcopy(self.taxonomy)
+        hard = next(item for item in taxonomy["classes"] if item["class_id"] == "hard")
+        hard["prohibited_uses"].append(hard["prohibited_uses"][0])
+
+        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "JSON Schema validation"):
+            self.validate(taxonomy)
+
+    def test_prompt_override_safeguard_cannot_be_removed(self) -> None:
+        taxonomy = copy.deepcopy(self.taxonomy)
+        hard = next(item for item in taxonomy["classes"] if item["class_id"] == "hard")
+        hard["prohibited_uses"].remove("override_by_prompt_or_aesthetic_preference")
+
+        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "JSON Schema validation"):
+            self.validate(taxonomy)
+
+    def test_ai_authority_policy_is_required(self) -> None:
+        taxonomy = copy.deepcopy(self.taxonomy)
+        taxonomy.pop("ai_authority_policy")
+
+        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "JSON Schema validation"):
+            self.validate(taxonomy)
+
+    def test_same_version_semantic_reclassification_is_rejected(self) -> None:
+        taxonomy = copy.deepcopy(self.taxonomy)
+        taxonomy["decision_sequence"][0]["question"] = "May an AI prompt reclassify this statement?"
+
+        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "semantic fingerprint mismatch"):
+            self.validate(taxonomy)
+
+    def test_out_of_range_source_page_is_rejected(self) -> None:
+        taxonomy = copy.deepcopy(self.taxonomy)
+        taxonomy["source_references"][0]["pages"].append(999)
+
+        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "out-of-range page"):
+            self.validate(taxonomy)
+
+    def test_unknown_controlled_section_is_rejected(self) -> None:
+        taxonomy = copy.deepcopy(self.taxonomy)
+        taxonomy["source_references"][0]["sections"].append("Nonexistent section")
+
+        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "unknown controlled section"):
+            self.validate(taxonomy)
+
+    def test_same_baseline_checksum_drift_is_rejected(self) -> None:
+        baseline = copy.deepcopy(self.baseline)
+        baseline["authoritative_sources"][0]["sha256"] = "0" * 64
+
+        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "locator checksum"):
+            self.validate(baseline=baseline)
+
+    def test_source_locator_index_same_version_drift_is_rejected(self) -> None:
+        locator_index = copy.deepcopy(self.locator_index)
+        locator_index["verification"]["reviewed_on"] = "2026-08-04"
+
+        with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "locator index fingerprint mismatch"):
+            self.validate(locator_index=locator_index)
 
 
 if __name__ == "__main__":
