@@ -55,9 +55,15 @@
     {
       "id": "S0-02",
       "title": "Freeze the source baseline",
-      "state": "in_progress",
-      "blocked_by": ["DEC-S0-002", "DEC-S0-006"],
-      "evidence": ["docs/stage-0/SOURCE_BASELINE.json"]
+      "state": "evidence_ready",
+      "blocked_by": [],
+      "builder": "Codex lead implementation agent",
+      "evidence": [
+        "docs/stage-0/SOURCE_BASELINE.json",
+        "docs/stage-0/evidence/S0-02-BUILDER-EVIDENCE.md",
+        "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform-Sources/commit/96986c06e6b6f0b7e3105bb88fe41e41b74ab5b3",
+        "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform-Sources/actions/runs/30835424708"
+      ]
     },
     {
       "id": "S0-03",

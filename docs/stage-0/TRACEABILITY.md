@@ -17,7 +17,7 @@ Status values follow the [delivery workflow](../governance/DELIVERY_WORKFLOW.md)
 | ID | Specification step | Required output | Current state | Dependency or next proof |
 |---|---|---|---|---|
 | S0-01 | Confirm commercial usage rights | Owner/rights statement and permitted uses | `passed` | DEC-S0-001, product-owner review evidence, PR #1 checkpoint |
-| S0-02 | Freeze the baseline | Immutable source manifest, checksum, storage URI, change policy | `in_progress` | Controlled source storage, independent review, completion checkpoint |
+| S0-02 | Freeze the baseline | Immutable source manifest, checksum, storage URI, change policy | `evidence_ready` | Product-owner storage/checksum review and completion checkpoint |
 | S0-03 | Create rule taxonomy | Versioned classes: hard, strong default, situational, scoring, example, explanatory | `evidence_ready` | Automated checks, product/domain review, and independent technical verdict |
 | S0-04 | Assign rule IDs | Stable IDs, source page/section, rationale, test condition | `not_started` | S0-03 |
 | S0-05 | Define precedence | Machine-testable truth/privacy-to-aesthetics ordering | `not_started` | S0-03 |

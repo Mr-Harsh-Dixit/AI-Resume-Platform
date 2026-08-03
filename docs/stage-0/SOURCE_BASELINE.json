@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "baseline_id": "S0-SOURCE-BASELINE-001",
-  "baseline_state": "in_progress",
+  "baseline_state": "evidence_ready",
   "recorded_on": "2026-08-03",
   "hash_algorithm": "sha256",
   "authoritative_sources": [
@@ -15,10 +15,10 @@
       "media_type": "application/pdf",
       "page_count": 38,
       "sha256": "05927b5fb2f4dc4ff44e7026a751c84e97ce5332f88d1fe48eda07ec19839fd8",
-      "controlled_storage_uri": null,
-      "storage_state": "pending_product_owner_decision",
+      "controlled_storage_uri": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform-Sources/blob/96986c06e6b6f0b7e3105bb88fe41e41b74ab5b3/sources/handbook/1.0.0/Professional_Resume_Handbook_ATS_and_Job_Targeting.pdf",
+      "storage_state": "complete",
       "commercial_rights_state": "confirmed_by_product_owner_author",
-      "repository_copy_authorized": false
+      "repository_copy_authorized": true
     },
     {
       "source_id": "SPEC-1.3",
@@ -30,10 +30,10 @@
       "media_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "rendered_page_count": 61,
       "sha256": "4afd26ce2d57362d8ab3e5fc334ee20a896dda5db844420fdf50ff8606e75b35",
-      "controlled_storage_uri": null,
-      "storage_state": "pending_product_owner_decision",
+      "controlled_storage_uri": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform-Sources/blob/96986c06e6b6f0b7e3105bb88fe41e41b74ab5b3/sources/specification/1.3.0/AI_Resume_Platform_Staged_Development_Specification_v1.3.docx",
+      "storage_state": "complete",
       "commercial_rights_state": "not_applicable_to_handbook_rights_gate",
-      "repository_copy_authorized": false
+      "repository_copy_authorized": true
     }
   ],
   "builder_inspection": {
@@ -48,6 +48,14 @@
       "Source files are referenced by filename and checksum; absolute workstation paths are intentionally excluded."
     ]
   },
+  "controlled_storage": {
+    "repository": "Mr-Harsh-Dixit/AI-Resume-Platform-Sources",
+    "visibility": "private",
+    "commit_sha": "96986c06e6b6f0b7e3105bb88fe41e41b74ab5b3",
+    "manifest_path": "SOURCE_MANIFEST.json",
+    "verification_workflow_url": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform-Sources/actions/runs/30835424708",
+    "verification_result": "passed"
+  },
   "change_policy": {
     "immutable_after_pass": true,
     "replacement_requires_new_baseline_id": true,
@@ -55,9 +63,7 @@
     "checksum_mismatch_result": "block_rulebook_use"
   },
   "open_requirements": [
-    "Record a controlled storage URI for each source.",
-    "Obtain product-owner pull-request verification of the recorded handbook-rights decision.",
-    "Obtain independent review of the source record and checksums.",
+    "Obtain product-owner review of the private storage boundary, pinned source URIs and checksum evidence.",
     "Publish the exact reviewed revision to the selected GitHub repository."
   ]
 }
