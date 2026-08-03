@@ -1,0 +1,157 @@
+{
+  "schema_version": "1.0.0",
+  "stage_id": "S0",
+  "stage_name": "Product, rights and rulebook baseline",
+  "stage_state": "blocked_entry_conditions",
+  "updated_on": "2026-08-03",
+  "source_specification": {
+    "source_id": "SPEC-1.3",
+    "pages": [19, 20, 21],
+    "source_baseline_id": "S0-SOURCE-BASELINE-001"
+  },
+  "entry_conditions": [
+    {
+      "id": "S0-ENTRY-01",
+      "criterion": "The source handbook file and version are identified.",
+      "state": "evidence_ready",
+      "evidence": ["docs/stage-0/SOURCE_BASELINE.json"]
+    },
+    {
+      "id": "S0-ENTRY-02",
+      "criterion": "The product owner has stated the intended price band, two-mode, field-profile, and LaTeX requirements.",
+      "state": "evidence_ready",
+      "evidence": ["SPEC-1.3 document control and Stage 0 entry conditions"]
+    },
+    {
+      "id": "S0-ENTRY-03",
+      "criterion": "Decision owners exist for scope, legal rights, rule interpretation, and each launch occupation profile.",
+      "state": "blocked",
+      "blocked_by": ["DEC-S0-003", "DEC-S0-004"]
+    }
+  ],
+  "steps": [
+    {
+      "id": "S0-01",
+      "title": "Confirm commercial usage rights",
+      "state": "evidence_ready",
+      "blocked_by": [],
+      "evidence": ["docs/stage-0/decisions/DEC-S0-001-HANDBOOK-RIGHTS.md"]
+    },
+    {
+      "id": "S0-02",
+      "title": "Freeze the source baseline",
+      "state": "in_progress",
+      "blocked_by": ["DEC-S0-002", "DEC-S0-006"],
+      "evidence": ["docs/stage-0/SOURCE_BASELINE.json"]
+    },
+    {
+      "id": "S0-03",
+      "title": "Create the rule taxonomy",
+      "state": "not_started",
+      "blocked_by": [],
+      "evidence": []
+    },
+    {
+      "id": "S0-04",
+      "title": "Assign stable rule IDs and source references",
+      "state": "not_started",
+      "blocked_by": ["S0-03"],
+      "evidence": []
+    },
+    {
+      "id": "S0-05",
+      "title": "Define rule precedence",
+      "state": "not_started",
+      "blocked_by": ["S0-03"],
+      "evidence": []
+    },
+    {
+      "id": "S0-06",
+      "title": "Define the occupation-profile contract",
+      "state": "not_started",
+      "blocked_by": ["DEC-S0-003"],
+      "evidence": []
+    },
+    {
+      "id": "S0-07",
+      "title": "Select launch occupation profiles",
+      "state": "blocked",
+      "blocked_by": ["DEC-S0-003", "DEC-S0-004"],
+      "evidence": []
+    },
+    {
+      "id": "S0-08",
+      "title": "Define sensitive-field policy",
+      "state": "not_started",
+      "blocked_by": ["S0-06", "S0-07"],
+      "evidence": []
+    },
+    {
+      "id": "S0-09",
+      "title": "Define supported markets and visible unsupported boundaries",
+      "state": "blocked",
+      "blocked_by": ["DEC-S0-004"],
+      "evidence": []
+    },
+    {
+      "id": "S0-10",
+      "title": "Define the canonical ResumeDocument and output-equivalence contract",
+      "state": "not_started",
+      "blocked_by": [],
+      "evidence": []
+    },
+    {
+      "id": "S0-11",
+      "title": "Define the template-governance contract",
+      "state": "not_started",
+      "blocked_by": [],
+      "evidence": []
+    },
+    {
+      "id": "S0-12",
+      "title": "Define product claims and prohibited marketing",
+      "state": "not_started",
+      "blocked_by": [],
+      "evidence": []
+    },
+    {
+      "id": "S0-13",
+      "title": "Create fictional evaluation fixtures",
+      "state": "not_started",
+      "blocked_by": ["S0-03", "S0-06", "S0-09", "S0-10"],
+      "evidence": []
+    },
+    {
+      "id": "S0-14",
+      "title": "Create and maintain the decision log",
+      "state": "in_progress",
+      "blocked_by": [],
+      "evidence": ["docs/stage-0/DECISION_LOG.md"]
+    }
+  ],
+  "exit_criteria": [
+    {"id": "S0-EXIT-01", "state": "evidence_ready", "criterion": "Commercial use rights are confirmed or explicitly resolved by the product owner.", "blocked_by": []},
+    {"id": "S0-EXIT-02", "state": "not_started", "criterion": "Every MVP hard rule has a stable ID, source, and testable condition.", "blocked_by": ["S0-03", "S0-04"]},
+    {"id": "S0-EXIT-03", "state": "in_review", "criterion": "General and Targeted mode boundaries are approved.", "blocked_by": []},
+    {"id": "S0-EXIT-04", "state": "blocked", "criterion": "Every launch profile has sources, field-review approval, field rules, and representative fixtures.", "blocked_by": ["DEC-S0-003", "DEC-S0-004", "S0-06", "S0-07", "S0-13"]},
+    {"id": "S0-EXIT-05", "state": "not_started", "criterion": "The canonical output contract defines content-equivalent DOCX, PDF, and LaTeX behavior.", "blocked_by": ["S0-10"]},
+    {"id": "S0-EXIT-06", "state": "not_started", "criterion": "Template compatibility, recommendation, upload, consent, moderation, licensing, deletion, and publication rules are approved and testable.", "blocked_by": ["S0-11"]},
+    {"id": "S0-EXIT-07", "state": "not_started", "criterion": "Unsupported occupations, markets, and claims are visible in product requirements.", "blocked_by": ["S0-09", "S0-12"]},
+    {"id": "S0-EXIT-08", "state": "blocked", "criterion": "An independent reviewer can trace a rule sample to the handbook without ambiguity.", "blocked_by": ["DEC-S0-003", "S0-03", "S0-04"]}
+  ],
+  "review": {
+    "builder": "Codex lead implementation agent",
+    "reviewer": null,
+    "verdict": null,
+    "verdict_on": null,
+    "remediation_history": []
+  },
+  "github_checkpoint": {
+    "state": "in_progress",
+    "repository": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform",
+    "branch": "agent/stage-0-control-plane",
+    "commit_sha": null,
+    "pull_request_url": null,
+    "blocked_by": []
+  }
+}
