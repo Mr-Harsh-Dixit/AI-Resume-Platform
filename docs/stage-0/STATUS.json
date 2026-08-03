@@ -147,11 +147,11 @@
     "remediation_history": []
   },
   "github_checkpoint": {
-    "state": "in_progress",
+    "state": "evidence_ready",
     "repository": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform",
     "branch": "agent/stage-0-control-plane",
-    "commit_sha": null,
-    "pull_request_url": null,
+    "commit_sha": "fa8aed2d75f3295d824aa419aa5a8d1366108bd5",
+    "pull_request_url": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/pull/1",
     "blocked_by": []
   }
 }

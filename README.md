@@ -7,8 +7,8 @@ This repository is the controlled implementation workspace for the AI Resume Pla
 - Stage: `S0 - Product, rights and rulebook baseline`
 - State: `BLOCKED_ENTRY_CONDITIONS`
 - Application code: intentionally not started
-- Active package: Stage 0 control plane and source baseline
-- GitHub remote: awaiting product-owner selection
+- Active package: Stage 0 control plane and source baseline candidate
+- GitHub remote: public `Mr-Harsh-Dixit/AI-Resume-Platform`
 
 The specification requires Stage 0 to close before Stage 1 design and before application code depends on resume rules. Preparatory artifacts may be built while an entry condition is unresolved, but they cannot be reported as passed.
 
