@@ -3,7 +3,7 @@
   "stage_id": "S0",
   "stage_name": "Product, rights and rulebook baseline",
   "stage_state": "blocked_entry_conditions",
-  "updated_on": "2026-08-03",
+  "updated_on": "2026-08-04",
   "source_specification": {
     "source_id": "SPEC-1.3",
     "pages": [19, 20, 21],
@@ -80,29 +80,136 @@
     {
       "id": "S0-03",
       "title": "Create the rule taxonomy",
-      "state": "evidence_ready",
+      "state": "passed",
       "blocked_by": [],
       "builder": "Codex lead implementation agent",
       "evidence": [
         "docs/stage-0/RULE_TAXONOMY.md",
         "docs/stage-0/evidence/S0-03-BUILDER-EVIDENCE.md",
+        "docs/stage-0/evidence/S0-03-REVIEW-FAIL-2026-08-03.md",
+        "docs/stage-0/evidence/S0-03-REVIEW-FAIL-2026-08-04.md",
+        "docs/stage-0/evidence/S0-03-REVIEW-PASS-2026-08-04.md",
         "rulebook/schemas/rule-taxonomy.schema.json",
         "rulebook/taxonomy/1.0.0/taxonomy.json",
+        "rulebook/taxonomy/1.0.0/semantic-lock.json",
+        "rulebook/sources/1.0.0/source-locator-index.json",
+        "requirements/verification.txt",
         "tests/test_rule_taxonomy.py"
-      ]
+      ],
+      "review_history": [
+        {
+          "reviewer": "Codex independent review instance - not the implementing agent",
+          "reviewed_commit": "8f90f2a474bad9f95e47f33655f3847fc0e7694d",
+          "verdict": "FAIL",
+          "product_domain_verdict": "PASS",
+          "technical_verdict": "FAIL",
+          "verdict_on": "2026-08-03",
+          "evidence": "docs/stage-0/evidence/S0-03-REVIEW-FAIL-2026-08-03.md"
+        },
+        {
+          "reviewer": "Codex independent review instance - not the implementing agent",
+          "reviewed_commit": "3855d434d3d97639c5b066e02e9951e105060495",
+          "verdict": "FAIL",
+          "product_domain_verdict": "PASS",
+          "technical_verdict": "FAIL",
+          "verdict_on": "2026-08-04",
+          "evidence": "docs/stage-0/evidence/S0-03-REVIEW-FAIL-2026-08-04.md"
+        },
+        {
+          "reviewer": "Codex independent review instance - not the implementing agent",
+          "reviewed_commit": "5656b394bd016d90abffe7d92f12ff583dac79b9",
+          "verdict": "PASS",
+          "product_domain_verdict": "PASS",
+          "technical_verdict": "PASS",
+          "verdict_on": "2026-08-04",
+          "evidence": "docs/stage-0/evidence/S0-03-REVIEW-PASS-2026-08-04.md"
+        }
+      ],
+      "remediation_history": [
+        {
+          "cycle": 1,
+          "state": "reviewed_failed",
+          "findings": [
+            "JSON Schema engine was not applied",
+            "Prompt and same-version semantic drift were not enforced",
+            "Source page, section, and checksum drift were accepted",
+            "Required negative regression paths were missing"
+          ],
+          "local_validation": {
+            "unit_tests": "PASS - 34 tests",
+            "stage0_control_plane": "PASS",
+            "taxonomy_schema_semantic_source_verifier": "PASS",
+            "reviewer_mutation_replay": "PASS - 7 of 7 rejected"
+          },
+          "published_candidate": {
+            "implementation_commit": "3c0717f888c16e4372260f1072b557697a581062",
+            "reviewed_head": "3855d434d3d97639c5b066e02e9951e105060495",
+            "pull_request_url": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/pull/5",
+            "ci_result": "PASS",
+            "ci_run_url": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/actions/runs/30843829537"
+          },
+          "review_outcome": {
+            "verdict": "FAIL",
+            "evidence": "docs/stage-0/evidence/S0-03-REVIEW-FAIL-2026-08-04.md"
+          }
+        },
+        {
+          "cycle": 2,
+          "state": "reviewed_passed",
+          "finding": "Stage 0 precautions was mapped to rendered specification page 20 instead of page 21",
+          "source_verification": {
+            "source_sha256": "4afd26ce2d57362d8ab3e5fc334ee20a896dda5db844420fdf50ff8606e75b35",
+            "page_20": "Deliverables ends on this page",
+            "page_21": "Precautions begins on this page"
+          },
+          "local_validation": {
+            "unit_tests": "PASS - 35 tests",
+            "exact_precautions_locator": "PASS - page 21",
+            "stage0_control_plane": "PASS",
+            "taxonomy_schema_semantic_source_verifier": "PASS",
+            "whitespace_error_marker_check": "PASS"
+          },
+          "published_candidate": {
+            "reviewed_head": "5656b394bd016d90abffe7d92f12ff583dac79b9",
+            "pull_request_url": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/pull/5",
+            "ci_result": "PASS",
+            "ci_run_url": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/actions/runs/30851539272"
+          },
+          "review_outcome": {
+            "verdict": "PASS",
+            "evidence": "docs/stage-0/evidence/S0-03-REVIEW-PASS-2026-08-04.md"
+          }
+        }
+      ],
+      "fresh_independent_review_required": false,
+      "review": {
+        "reviewer": "Codex independent review instance - not the implementing agent",
+        "verdict": "PASS",
+        "verdict_on": "2026-08-04",
+        "reviewed_commit": "5656b394bd016d90abffe7d92f12ff583dac79b9",
+        "product_domain_verdict": "PASS",
+        "technical_verdict": "PASS",
+        "evidence": "docs/stage-0/evidence/S0-03-REVIEW-PASS-2026-08-04.md"
+      },
+      "github_checkpoint": {
+        "state": "passed",
+        "commit_sha": "5656b394bd016d90abffe7d92f12ff583dac79b9",
+        "url": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/pull/5",
+        "ci_run_url": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/actions/runs/30851539272"
+      }
     },
     {
       "id": "S0-04",
       "title": "Assign stable rule IDs and source references",
       "state": "not_started",
-      "blocked_by": ["S0-03"],
+      "blocked_by": [],
       "evidence": []
     },
     {
       "id": "S0-05",
       "title": "Define rule precedence",
       "state": "not_started",
-      "blocked_by": ["S0-03"],
+      "blocked_by": [],
       "evidence": []
     },
     {
@@ -158,7 +265,7 @@
       "id": "S0-13",
       "title": "Create fictional evaluation fixtures",
       "state": "not_started",
-      "blocked_by": ["S0-03", "S0-06", "S0-09", "S0-10"],
+      "blocked_by": ["S0-06", "S0-09", "S0-10"],
       "evidence": []
     },
     {
@@ -171,13 +278,13 @@
   ],
   "exit_criteria": [
     {"id": "S0-EXIT-01", "state": "passed", "criterion": "Commercial use rights are confirmed or explicitly resolved by the product owner.", "blocked_by": [], "evidence": ["docs/stage-0/evidence/S0-01-REVIEW.md"]},
-    {"id": "S0-EXIT-02", "state": "not_started", "criterion": "Every MVP hard rule has a stable ID, source, and testable condition.", "blocked_by": ["S0-03", "S0-04"]},
+    {"id": "S0-EXIT-02", "state": "not_started", "criterion": "Every MVP hard rule has a stable ID, source, and testable condition.", "blocked_by": ["S0-04"]},
     {"id": "S0-EXIT-03", "state": "in_review", "criterion": "General and Targeted mode boundaries are approved.", "blocked_by": []},
     {"id": "S0-EXIT-04", "state": "blocked", "criterion": "Every launch profile has sources, field-review approval, field rules, and representative fixtures.", "blocked_by": ["DEC-S0-003", "DEC-S0-004", "S0-06", "S0-07", "S0-13"]},
     {"id": "S0-EXIT-05", "state": "not_started", "criterion": "The canonical output contract defines content-equivalent DOCX, PDF, and LaTeX behavior.", "blocked_by": ["S0-10"]},
     {"id": "S0-EXIT-06", "state": "not_started", "criterion": "Template compatibility, recommendation, upload, consent, moderation, licensing, deletion, and publication rules are approved and testable.", "blocked_by": ["S0-11"]},
     {"id": "S0-EXIT-07", "state": "not_started", "criterion": "Unsupported occupations, markets, and claims are visible in product requirements.", "blocked_by": ["S0-09", "S0-12"]},
-    {"id": "S0-EXIT-08", "state": "blocked", "criterion": "An independent reviewer can trace a rule sample to the handbook without ambiguity.", "blocked_by": ["DEC-S0-003", "S0-03", "S0-04"]}
+    {"id": "S0-EXIT-08", "state": "blocked", "criterion": "An independent reviewer can trace a rule sample to the handbook without ambiguity.", "blocked_by": ["DEC-S0-003", "S0-04"]}
   ],
   "review": {
     "builder": "Codex lead implementation agent",

@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "taxonomy_id": "resume-rule-taxonomy",
+  "taxonomy_version": "1.0.0",
+  "fingerprint_algorithm": "sha256-canonical-json",
+  "fingerprinted_fields": [
+    "schema_version",
+    "taxonomy_id",
+    "taxonomy_version",
+    "source_baseline_id",
+    "primary_class_cardinality",
+    "classes",
+    "decision_sequence",
+    "context_axes",
+    "global_invariants",
+    "unclassified_result",
+    "ai_authority_policy",
+    "change_policy",
+    "source_references"
+  ],
+  "semantic_sha256": "8162de5a1b7ada092047e0421f6984ca982f1cddd90e63419204e2a0075ef087",
+  "source_locator_index_sha256": "1a491281fcae6a55b5f1be28816a99524ebb10f6cbb94519082f0cb58b01a3cc",
+  "change_policy": {
+    "same_version_semantic_change": "reject",
+    "new_version_required": true,
+    "fresh_review_required": true
+  }
+}

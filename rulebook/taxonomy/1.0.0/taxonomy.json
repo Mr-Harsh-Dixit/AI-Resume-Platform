@@ -3,7 +3,7 @@
   "schema_version": "1.0.0",
   "taxonomy_id": "resume-rule-taxonomy",
   "taxonomy_version": "1.0.0",
-  "status": "candidate",
+  "status": "approved",
   "source_baseline_id": "S0-SOURCE-BASELINE-001",
   "primary_class_cardinality": "exactly_one",
   "classes": [
@@ -246,9 +246,19 @@
       "invariant_id": "TAX-INV-008",
       "statement": "Ambiguous classification fails closed for human rule review rather than choosing the most permissive class.",
       "failure_result": "reject_until_human_review"
+    },
+    {
+      "invariant_id": "TAX-INV-009",
+      "statement": "AI prompts and model output cannot alter, bypass, or reclassify approved rule semantics.",
+      "failure_result": "reject_ai_override"
     }
   ],
   "unclassified_result": "reject_until_human_review",
+  "ai_authority_policy": {
+    "prompt_reclassification_forbidden": true,
+    "model_output_authority": "provisional_structured_data",
+    "deterministic_validation_required": true
+  },
   "change_policy": {
     "silent_reclassification_forbidden": true,
     "version_change_required": true,
@@ -257,6 +267,7 @@
   "source_references": [
     {
       "source_id": "HANDBOOK-1.0",
+      "source_sha256": "05927b5fb2f4dc4ff44e7026a751c84e97ce5332f88d1fe48eda07ec19839fd8",
       "pages": [2, 7, 21, 27, 28, 29],
       "sections": [
         "Scope and limits",
@@ -270,6 +281,7 @@
     },
     {
       "source_id": "SPEC-1.3",
+      "source_sha256": "4afd26ce2d57362d8ab3e5fc334ee20a896dda5db844420fdf50ff8606e75b35",
       "pages": [16, 19, 20, 21],
       "sections": [
         "4.4 Rule categories",

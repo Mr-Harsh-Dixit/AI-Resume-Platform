@@ -23,6 +23,7 @@ ALLOWED_ITEM_STATES = {
     "passed",
 }
 ALLOWED_STAGE_STATES = ALLOWED_ITEM_STATES | {"blocked_entry_conditions"}
+ALLOWED_REVIEW_VERDICTS = {"PASS", "FAIL", "BLOCKED"}
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 GIT_OBJECT_ID_RE = re.compile(r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
 PINNED_PRIVATE_SOURCE_RE = re.compile(
@@ -173,6 +174,39 @@ def validate_pass_evidence(item: dict[str, Any], label: str) -> None:
     require(not item.get("blocked_by"), f"{label} passed while blockers remain recorded")
 
 
+def validate_review_history(item: dict[str, Any], label: str) -> None:
+    history = item.get("review_history")
+    if history is None:
+        return
+
+    require(isinstance(history, list) and history, f"{label} review history must be a non-empty list")
+    for index, record in enumerate(history):
+        record_label = f"{label} review_history[{index}]"
+        require(isinstance(record, dict), f"{record_label} must be an object")
+        require(record.get("reviewer"), f"{record_label} lacks reviewer identity")
+        require(record.get("verdict") in ALLOWED_REVIEW_VERDICTS, f"{record_label} has an invalid verdict")
+        require(record.get("verdict_on"), f"{record_label} lacks a verdict date")
+        require(
+            GIT_OBJECT_ID_RE.fullmatch(str(record.get("reviewed_commit", ""))) is not None,
+            f"{record_label} lacks a full reviewed Git object ID",
+        )
+        evidence = record.get("evidence")
+        require(
+            isinstance(evidence, str) and evidence.startswith("docs/stage-0/evidence/"),
+            f"{record_label} lacks repository review evidence",
+        )
+        require((ROOT / evidence).is_file(), f"{record_label} points to missing review evidence")
+        builder = item.get("builder")
+        if builder:
+            require(builder != record.get("reviewer"), f"{record_label} was self-reviewed by its builder")
+        for verdict_field in ("product_domain_verdict", "technical_verdict"):
+            if verdict_field in record:
+                require(
+                    record[verdict_field] in ALLOWED_REVIEW_VERDICTS,
+                    f"{record_label} has an invalid {verdict_field}",
+                )
+
+
 def validate_status(status: dict[str, Any], baseline: dict[str, Any]) -> None:
     require(status.get("schema_version") == "1.0.0", "Unsupported status schema version")
     require(status.get("stage_id") == "S0", "Status file must describe Stage 0")
@@ -202,6 +236,7 @@ def validate_status(status: dict[str, Any], baseline: dict[str, Any]) -> None:
         validate_state(item, ALLOWED_ITEM_STATES, item["id"])
     for item in steps:
         validate_state(item, ALLOWED_ITEM_STATES, item["id"])
+        validate_review_history(item, item["id"])
         validate_pass_evidence(item, item["id"])
     for item in exits:
         validate_state(item, ALLOWED_ITEM_STATES, item["id"])
