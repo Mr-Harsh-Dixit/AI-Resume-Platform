@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0.0",
+  "baseline_id": "S0-SOURCE-BASELINE-001",
+  "baseline_state": "in_progress",
+  "recorded_on": "2026-08-03",
+  "hash_algorithm": "sha256",
+  "authoritative_sources": [
+    {
+      "source_id": "HANDBOOK-1.0",
+      "role": "domain_rule_source",
+      "title": "The Professional Resume Handbook: ATS-Safe, Evidence-Driven, Job-Targeted Resumes",
+      "version": "1.0",
+      "document_date": "2026-08",
+      "filename": "Professional_Resume_Handbook_ATS_and_Job_Targeting.pdf",
+      "media_type": "application/pdf",
+      "page_count": 38,
+      "sha256": "05927b5fb2f4dc4ff44e7026a751c84e97ce5332f88d1fe48eda07ec19839fd8",
+      "controlled_storage_uri": null,
+      "storage_state": "pending_product_owner_decision",
+      "commercial_rights_state": "confirmed_by_product_owner_author",
+      "repository_copy_authorized": false
+    },
+    {
+      "source_id": "SPEC-1.3",
+      "role": "implementation_specification",
+      "title": "AI Resume Platform - Staged Development Specification",
+      "version": "1.3",
+      "document_date": "2026-08-03",
+      "filename": "AI_Resume_Platform_Staged_Development_Specification_v1.3.docx",
+      "media_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "rendered_page_count": 61,
+      "sha256": "4afd26ce2d57362d8ab3e5fc334ee20a896dda5db844420fdf50ff8606e75b35",
+      "controlled_storage_uri": null,
+      "storage_state": "pending_product_owner_decision",
+      "commercial_rights_state": "not_applicable_to_handbook_rights_gate",
+      "repository_copy_authorized": false
+    }
+  ],
+  "builder_inspection": {
+    "performed_on": "2026-08-03",
+    "source_integrity": "passed",
+    "structural_review": "passed",
+    "visual_review": "passed",
+    "independent_review": "pending",
+    "notes": [
+      "Both source files opened and their structures were extracted without modifying the originals.",
+      "All 38 handbook pages and all 61 rendered specification pages were visually inspected.",
+      "Source files are referenced by filename and checksum; absolute workstation paths are intentionally excluded."
+    ]
+  },
+  "change_policy": {
+    "immutable_after_pass": true,
+    "replacement_requires_new_baseline_id": true,
+    "silent_source_replacement_forbidden": true,
+    "checksum_mismatch_result": "block_rulebook_use"
+  },
+  "open_requirements": [
+    "Record a controlled storage URI for each source.",
+    "Obtain product-owner pull-request verification of the recorded handbook-rights decision.",
+    "Obtain independent review of the source record and checksums.",
+    "Publish the exact reviewed revision to the selected GitHub repository."
+  ]
+}
