@@ -25,10 +25,20 @@ class Stage0ControlPlaneTests(unittest.TestCase):
 
     def test_passed_step_requires_independent_review(self) -> None:
         status = copy.deepcopy(self.status)
-        status["steps"][1]["state"] = "passed"
+        step = status["steps"][1]
+        step["state"] = "passed"
+        step.pop("review", None)
+        step.pop("github_checkpoint", None)
 
         with self.assertRaisesRegex(CONTROL.ControlPlaneError, "review evidence"):
             CONTROL.validate_status(status, self.baseline)
+
+    def test_passed_baseline_requires_review(self) -> None:
+        baseline = copy.deepcopy(self.baseline)
+        baseline.pop("review", None)
+
+        with self.assertRaisesRegex(CONTROL.ControlPlaneError, "review evidence"):
+            CONTROL.validate_baseline(baseline)
 
     def test_passed_step_accepts_reviewed_sha1_git_checkpoint(self) -> None:
         status = copy.deepcopy(self.status)

@@ -55,15 +55,27 @@
     {
       "id": "S0-02",
       "title": "Freeze the source baseline",
-      "state": "evidence_ready",
+      "state": "passed",
       "blocked_by": [],
       "builder": "Codex lead implementation agent",
       "evidence": [
         "docs/stage-0/SOURCE_BASELINE.json",
         "docs/stage-0/evidence/S0-02-BUILDER-EVIDENCE.md",
+        "docs/stage-0/evidence/S0-02-REVIEW.md",
         "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform-Sources/commit/96986c06e6b6f0b7e3105bb88fe41e41b74ab5b3",
         "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform-Sources/actions/runs/30835424708"
-      ]
+      ],
+      "review": {
+        "reviewer": "Mr-Harsh-Dixit - product owner and source owner",
+        "verdict": "PASS",
+        "verdict_on": "2026-08-03",
+        "scope": "Controlled source identity, private storage boundary, immutable references, checksums, and change policy"
+      },
+      "github_checkpoint": {
+        "state": "passed",
+        "commit_sha": "406e69b050f182d5aa4e694659697aa3d620f9f7",
+        "url": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/pull/4"
+      }
     },
     {
       "id": "S0-03",

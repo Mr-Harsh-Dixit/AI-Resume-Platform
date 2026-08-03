@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "baseline_id": "S0-SOURCE-BASELINE-001",
-  "baseline_state": "evidence_ready",
+  "baseline_state": "passed",
   "recorded_on": "2026-08-03",
   "hash_algorithm": "sha256",
   "authoritative_sources": [
@@ -41,7 +41,7 @@
     "source_integrity": "passed",
     "structural_review": "passed",
     "visual_review": "passed",
-    "independent_review": "pending",
+    "independent_review": "passed",
     "notes": [
       "Both source files opened and their structures were extracted without modifying the originals.",
       "All 38 handbook pages and all 61 rendered specification pages were visually inspected.",
@@ -56,14 +56,20 @@
     "verification_workflow_url": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform-Sources/actions/runs/30835424708",
     "verification_result": "passed"
   },
+  "review": {
+    "reviewer": "Mr-Harsh-Dixit",
+    "role": "product owner and source owner",
+    "verdict": "PASS",
+    "reviewed_commit": "406e69b050f182d5aa4e694659697aa3d620f9f7",
+    "pull_request_url": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/pull/4",
+    "reviewed_on": "2026-08-03",
+    "evidence_path": "docs/stage-0/evidence/S0-02-REVIEW.md"
+  },
   "change_policy": {
     "immutable_after_pass": true,
     "replacement_requires_new_baseline_id": true,
     "silent_source_replacement_forbidden": true,
     "checksum_mismatch_result": "block_rulebook_use"
   },
-  "open_requirements": [
-    "Obtain product-owner review of the private storage boundary, pinned source URIs and checksum evidence.",
-    "Publish the exact reviewed revision to the selected GitHub repository."
-  ]
+  "open_requirements": []
 }

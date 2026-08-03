@@ -127,6 +127,26 @@ def validate_baseline(baseline: dict[str, Any]) -> None:
         require(GIT_OBJECT_ID_RE.fullmatch(commit_sha) is not None, "Controlled source commit ID is invalid")
         require(storage_commits == {commit_sha}, "Pinned source URIs do not match the controlled source commit")
 
+    if baseline.get("baseline_state") == "passed":
+        review = baseline.get("review")
+        require(isinstance(review, dict), "Passed source baseline lacks review evidence")
+        require(review.get("verdict") == "PASS", "Passed source baseline lacks a PASS verdict")
+        require(review.get("reviewer"), "Passed source baseline lacks reviewer identity")
+        require(review.get("reviewed_on"), "Passed source baseline lacks review date")
+        require(
+            GIT_OBJECT_ID_RE.fullmatch(str(review.get("reviewed_commit", ""))) is not None,
+            "Passed source baseline lacks a reviewed Git object ID",
+        )
+        require(
+            str(review.get("pull_request_url", "")).startswith("https://github.com/"),
+            "Passed source baseline lacks a GitHub review URL",
+        )
+        require(
+            baseline.get("builder_inspection", {}).get("independent_review") == "passed",
+            "Passed source baseline lacks an independent review result",
+        )
+        require(not baseline.get("open_requirements"), "Passed source baseline retains open requirements")
+
     validate_no_private_paths(baseline)
 
 
