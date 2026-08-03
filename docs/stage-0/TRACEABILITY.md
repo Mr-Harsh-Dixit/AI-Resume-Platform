@@ -16,7 +16,7 @@ Status values follow the [delivery workflow](../governance/DELIVERY_WORKFLOW.md)
 
 | ID | Specification step | Required output | Current state | Dependency or next proof |
 |---|---|---|---|---|
-| S0-01 | Confirm commercial usage rights | Owner/rights statement and permitted uses | `evidence_ready` | Product-owner verification in pull request, review, GitHub checkpoint |
+| S0-01 | Confirm commercial usage rights | Owner/rights statement and permitted uses | `passed` | DEC-S0-001, product-owner review evidence, PR #1 checkpoint |
 | S0-02 | Freeze the baseline | Immutable source manifest, checksum, storage URI, change policy | `in_progress` | Controlled source storage, independent review, completion checkpoint |
 | S0-03 | Create rule taxonomy | Versioned classes: hard, strong default, situational, scoring, example, explanatory | `not_started` | Source baseline candidate available |
 | S0-04 | Assign rule IDs | Stable IDs, source page/section, rationale, test condition | `not_started` | S0-03 |
@@ -47,7 +47,7 @@ Status values follow the [delivery workflow](../governance/DELIVERY_WORKFLOW.md)
 
 | ID | Exit criterion | Current state | Required evidence |
 |---|---|---|---|
-| S0-EXIT-01 | Commercial rights confirmed or owner resolves risk | `evidence_ready` | Recorded owner decision pending pull-request verification |
+| S0-EXIT-01 | Commercial rights confirmed or owner resolves risk | `passed` | `evidence/S0-01-REVIEW.md` and PR #1 |
 | S0-EXIT-02 | Every MVP hard rule has ID, source, and test | `not_started` | Catalog validation plus rule tests |
 | S0-EXIT-03 | General and Targeted boundaries approved | `in_review` | Product-owner acceptance of specification boundary |
 | S0-EXIT-04 | Every launch profile is sourced, reviewed, field-complete, and fixture-covered | `blocked` | Profile packages and qualified reviewer verdicts |

@@ -22,5 +22,6 @@ This decision does not place the handbook PDF in the public repository and does 
 - Decision date: 2026-08-03
 - Original confirmation: Codex project task conversation
 - Affected items: S0-01, S0-02, S0-EXIT-01
-- Record state: `evidence_ready`
-- Required next action: product owner verifies this record in the pull request; formal step passage still requires the configured review and GitHub completion gates.
+- Record state: `passed`
+- Product-owner review evidence: `docs/stage-0/evidence/S0-01-REVIEW.md`
+- Completion checkpoint: <https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/pull/1>
