@@ -25,6 +25,10 @@ ALLOWED_ITEM_STATES = {
 ALLOWED_STAGE_STATES = ALLOWED_ITEM_STATES | {"blocked_entry_conditions"}
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 GIT_OBJECT_ID_RE = re.compile(r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
+PINNED_PRIVATE_SOURCE_RE = re.compile(
+    r"^https://github\.com/Mr-Harsh-Dixit/AI-Resume-Platform-Sources/blob/"
+    r"(?P<commit>[0-9a-f]{40}|[0-9a-f]{64})/sources/(?:handbook|specification)/.+$"
+)
 WINDOWS_ABSOLUTE_PATH_RE = re.compile(r"^[A-Za-z]:[\\/]")
 
 
@@ -89,6 +93,7 @@ def validate_baseline(baseline: dict[str, Any]) -> None:
     require(isinstance(sources, list) and len(sources) >= 2, "At least two authoritative sources are required")
     source_ids = [source.get("source_id") for source in sources]
     require(len(source_ids) == len(set(source_ids)), "Source IDs must be unique")
+    storage_commits: set[str] = set()
 
     for source in sources:
         source_id = source.get("source_id", "<unknown>")
@@ -96,7 +101,51 @@ def validate_baseline(baseline: dict[str, Any]) -> None:
         require(source.get("filename"), f"{source_id} is missing filename")
         require(source.get("version"), f"{source_id} is missing version")
         if source.get("storage_state") == "complete":
-            require(source.get("controlled_storage_uri"), f"{source_id} storage is complete without a URI")
+            storage_uri = source.get("controlled_storage_uri")
+            require(storage_uri, f"{source_id} storage is complete without a URI")
+            storage_match = PINNED_PRIVATE_SOURCE_RE.fullmatch(str(storage_uri))
+            require(
+                storage_match is not None,
+                f"{source_id} storage URI must pin an immutable private-source commit",
+            )
+            storage_commits.add(storage_match.group("commit"))
+            require(
+                source.get("repository_copy_authorized") is True,
+                f"{source_id} storage is complete without repository-copy authorization",
+            )
+
+    if baseline.get("baseline_state") in {"evidence_ready", "passed"}:
+        require(
+            all(source.get("storage_state") == "complete" for source in sources),
+            "Evidence-ready source baseline contains incomplete storage",
+        )
+        controlled_storage = baseline.get("controlled_storage")
+        require(isinstance(controlled_storage, dict), "Evidence-ready source baseline lacks controlled-storage metadata")
+        require(controlled_storage.get("visibility") == "private", "Controlled source repository must be private")
+        require(controlled_storage.get("verification_result") == "passed", "Controlled source verification has not passed")
+        commit_sha = str(controlled_storage.get("commit_sha", ""))
+        require(GIT_OBJECT_ID_RE.fullmatch(commit_sha) is not None, "Controlled source commit ID is invalid")
+        require(storage_commits == {commit_sha}, "Pinned source URIs do not match the controlled source commit")
+
+    if baseline.get("baseline_state") == "passed":
+        review = baseline.get("review")
+        require(isinstance(review, dict), "Passed source baseline lacks review evidence")
+        require(review.get("verdict") == "PASS", "Passed source baseline lacks a PASS verdict")
+        require(review.get("reviewer"), "Passed source baseline lacks reviewer identity")
+        require(review.get("reviewed_on"), "Passed source baseline lacks review date")
+        require(
+            GIT_OBJECT_ID_RE.fullmatch(str(review.get("reviewed_commit", ""))) is not None,
+            "Passed source baseline lacks a reviewed Git object ID",
+        )
+        require(
+            str(review.get("pull_request_url", "")).startswith("https://github.com/"),
+            "Passed source baseline lacks a GitHub review URL",
+        )
+        require(
+            baseline.get("builder_inspection", {}).get("independent_review") == "passed",
+            "Passed source baseline lacks an independent review result",
+        )
+        require(not baseline.get("open_requirements"), "Passed source baseline retains open requirements")
 
     validate_no_private_paths(baseline)
 

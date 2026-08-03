@@ -25,10 +25,20 @@ class Stage0ControlPlaneTests(unittest.TestCase):
 
     def test_passed_step_requires_independent_review(self) -> None:
         status = copy.deepcopy(self.status)
-        status["steps"][1]["state"] = "passed"
+        step = status["steps"][1]
+        step["state"] = "passed"
+        step.pop("review", None)
+        step.pop("github_checkpoint", None)
 
         with self.assertRaisesRegex(CONTROL.ControlPlaneError, "review evidence"):
             CONTROL.validate_status(status, self.baseline)
+
+    def test_passed_baseline_requires_review(self) -> None:
+        baseline = copy.deepcopy(self.baseline)
+        baseline.pop("review", None)
+
+        with self.assertRaisesRegex(CONTROL.ControlPlaneError, "review evidence"):
+            CONTROL.validate_baseline(baseline)
 
     def test_passed_step_accepts_reviewed_sha1_git_checkpoint(self) -> None:
         status = copy.deepcopy(self.status)
@@ -78,16 +88,40 @@ class Stage0ControlPlaneTests(unittest.TestCase):
 
     def test_source_manifest_rejects_absolute_workstation_paths(self) -> None:
         baseline = copy.deepcopy(self.baseline)
-        baseline["authoritative_sources"][0]["controlled_storage_uri"] = "C:\\Users\\example\\source.pdf"
+        baseline["builder_inspection"]["notes"][0] = "C:\\Users\\example\\source.pdf"
 
         with self.assertRaisesRegex(CONTROL.ControlPlaneError, "Absolute workstation path"):
             CONTROL.validate_baseline(baseline)
 
     def test_complete_source_storage_requires_uri(self) -> None:
         baseline = copy.deepcopy(self.baseline)
-        baseline["authoritative_sources"][0]["storage_state"] = "complete"
+        baseline["authoritative_sources"][0]["controlled_storage_uri"] = None
 
         with self.assertRaisesRegex(CONTROL.ControlPlaneError, "without a URI"):
+            CONTROL.validate_baseline(baseline)
+
+    def test_complete_source_storage_rejects_mutable_branch_url(self) -> None:
+        baseline = copy.deepcopy(self.baseline)
+        baseline["authoritative_sources"][0]["controlled_storage_uri"] = (
+            "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform-Sources/blob/main/"
+            "sources/handbook/1.0.0/source.pdf"
+        )
+
+        with self.assertRaisesRegex(CONTROL.ControlPlaneError, "immutable private-source commit"):
+            CONTROL.validate_baseline(baseline)
+
+    def test_complete_source_storage_requires_copy_authorization(self) -> None:
+        baseline = copy.deepcopy(self.baseline)
+        baseline["authoritative_sources"][0]["repository_copy_authorized"] = False
+
+        with self.assertRaisesRegex(CONTROL.ControlPlaneError, "copy authorization"):
+            CONTROL.validate_baseline(baseline)
+
+    def test_source_uris_must_match_controlled_storage_commit(self) -> None:
+        baseline = copy.deepcopy(self.baseline)
+        baseline["controlled_storage"]["commit_sha"] = "b" * 40
+
+        with self.assertRaisesRegex(CONTROL.ControlPlaneError, "do not match"):
             CONTROL.validate_baseline(baseline)
 
 
