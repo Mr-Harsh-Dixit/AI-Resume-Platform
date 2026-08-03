@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/blob/main/rulebook/schemas/rule-taxonomy.schema.json",
+  "title": "Resume Rule Taxonomy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "taxonomy_id",
+    "taxonomy_version",
+    "status",
+    "source_baseline_id",
+    "primary_class_cardinality",
+    "classes",
+    "decision_sequence",
+    "context_axes",
+    "global_invariants",
+    "unclassified_result",
+    "change_policy",
+    "source_references"
+  ],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"type": "string", "const": "1.0.0"},
+    "taxonomy_id": {"type": "string", "const": "resume-rule-taxonomy"},
+    "taxonomy_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "status": {"type": "string", "enum": ["candidate", "approved", "superseded"]},
+    "source_baseline_id": {"type": "string", "minLength": 1},
+    "primary_class_cardinality": {"type": "string", "const": "exactly_one"},
+    "classes": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {"$ref": "#/$defs/ruleClass"}
+    },
+    "decision_sequence": {
+      "type": "array",
+      "minItems": 6,
+      "items": {"$ref": "#/$defs/decision"}
+    },
+    "context_axes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"}
+    },
+    "global_invariants": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/invariant"}
+    },
+    "unclassified_result": {"type": "string", "const": "reject_until_human_review"},
+    "change_policy": {"$ref": "#/$defs/changePolicy"},
+    "source_references": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/sourceReference"}
+    }
+  },
+  "$defs": {
+    "ruleClass": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "class_id",
+        "description",
+        "classification_question",
+        "actionability",
+        "enforcement_mode",
+        "context_required",
+        "exception_policy",
+        "required_rule_fields",
+        "prohibited_uses"
+      ],
+      "properties": {
+        "class_id": {
+          "type": "string",
+          "enum": ["hard", "strong_default", "situational", "scoring", "example", "explanatory"]
+        },
+        "description": {"type": "string", "minLength": 1},
+        "classification_question": {"type": "string", "minLength": 1},
+        "actionability": {"type": "string", "enum": ["enforceable", "diagnostic", "non_actionable"]},
+        "enforcement_mode": {
+          "type": "string",
+          "enum": ["block", "apply_unless_exception", "evaluate_context", "score_only", "never_execute"]
+        },
+        "context_required": {"type": "boolean"},
+        "exception_policy": {"$ref": "#/$defs/exceptionPolicy"},
+        "required_rule_fields": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"}
+        },
+        "prohibited_uses": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "cannot_override": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "enum": ["hard", "strong_default", "situational", "scoring"]}
+        },
+        "candidate_content_reuse": {"type": "string", "enum": ["forbidden", "not_applicable"]}
+      }
+    },
+    "exceptionPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowed", "required_evidence"],
+      "properties": {
+        "allowed": {"type": "boolean"},
+        "required_evidence": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["order", "question", "class_on_yes"],
+      "properties": {
+        "order": {"type": "integer", "minimum": 1},
+        "question": {"type": "string", "minLength": 1},
+        "class_on_yes": {
+          "type": "string",
+          "enum": ["hard", "strong_default", "situational", "scoring", "example", "explanatory"]
+        }
+      }
+    },
+    "invariant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["invariant_id", "statement", "failure_result"],
+      "properties": {
+        "invariant_id": {"type": "string", "pattern": "^TAX-INV-[0-9]{3}$"},
+        "statement": {"type": "string", "minLength": 1},
+        "failure_result": {"type": "string", "minLength": 1}
+      }
+    },
+    "changePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["silent_reclassification_forbidden", "version_change_required", "review_required"],
+      "properties": {
+        "silent_reclassification_forbidden": {"type": "boolean", "const": true},
+        "version_change_required": {"type": "boolean", "const": true},
+        "review_required": {"type": "boolean", "const": true}
+      }
+    },
+    "sourceReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "pages", "sections", "purpose"],
+      "properties": {
+        "source_id": {"type": "string", "minLength": 1},
+        "pages": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "integer", "minimum": 1}
+        },
+        "sections": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "purpose": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

@@ -62,9 +62,16 @@
     {
       "id": "S0-03",
       "title": "Create the rule taxonomy",
-      "state": "not_started",
+      "state": "evidence_ready",
       "blocked_by": [],
-      "evidence": []
+      "builder": "Codex lead implementation agent",
+      "evidence": [
+        "docs/stage-0/RULE_TAXONOMY.md",
+        "docs/stage-0/evidence/S0-03-BUILDER-EVIDENCE.md",
+        "rulebook/schemas/rule-taxonomy.schema.json",
+        "rulebook/taxonomy/1.0.0/taxonomy.json",
+        "tests/test_rule_taxonomy.py"
+      ]
     },
     {
       "id": "S0-04",

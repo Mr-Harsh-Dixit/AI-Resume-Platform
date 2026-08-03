@@ -1,0 +1,283 @@
+{
+  "$schema": "../../schemas/rule-taxonomy.schema.json",
+  "schema_version": "1.0.0",
+  "taxonomy_id": "resume-rule-taxonomy",
+  "taxonomy_version": "1.0.0",
+  "status": "candidate",
+  "source_baseline_id": "S0-SOURCE-BASELINE-001",
+  "primary_class_cardinality": "exactly_one",
+  "classes": [
+    {
+      "class_id": "hard",
+      "description": "A testable safety, truth, eligibility, privacy, explicit-instruction, or document-validity requirement whose failure blocks the affected claim, generation, export, or submission state.",
+      "classification_question": "Would violation make the output untruthful, unsafe, unauthorized, ineligible, contrary to an explicit application instruction, or unusable as a required document?",
+      "actionability": "enforceable",
+      "enforcement_mode": "block",
+      "context_required": false,
+      "exception_policy": {
+        "allowed": false,
+        "required_evidence": []
+      },
+      "required_rule_fields": [
+        "rule_id",
+        "condition",
+        "result",
+        "message",
+        "remediation",
+        "source_refs",
+        "tests"
+      ],
+      "prohibited_uses": [
+        "downgrade_to_score_to_allow_release",
+        "override_by_prompt_or_aesthetic_preference"
+      ]
+    },
+    {
+      "class_id": "strong_default",
+      "description": "A generally preferred rule that applies unless a documented vacancy, market, sector, occupation-profile, accessibility, or user-evidence reason justifies a tested exception.",
+      "classification_question": "Should the platform normally apply this rule while permitting a documented, higher-authority, tested exception?",
+      "actionability": "enforceable",
+      "enforcement_mode": "apply_unless_exception",
+      "context_required": false,
+      "exception_policy": {
+        "allowed": true,
+        "required_evidence": [
+          "exception_reason",
+          "exception_authority",
+          "applicable_context",
+          "regression_test"
+        ]
+      },
+      "required_rule_fields": [
+        "rule_id",
+        "condition",
+        "default_result",
+        "exception_contract",
+        "source_refs",
+        "tests"
+      ],
+      "prohibited_uses": [
+        "undocumented_exception",
+        "exception_based_only_on_aesthetic_preference"
+      ],
+      "cannot_override": ["hard"]
+    },
+    {
+      "class_id": "situational",
+      "description": "A rule whose applicable behavior is selected only after explicit context such as market, occupation profile, sector, seniority, career stage, evidence state, vacancy instruction, or output constraint is resolved.",
+      "classification_question": "Can the correct behavior change materially across one or more approved context axes?",
+      "actionability": "enforceable",
+      "enforcement_mode": "evaluate_context",
+      "context_required": true,
+      "exception_policy": {
+        "allowed": false,
+        "required_evidence": []
+      },
+      "required_rule_fields": [
+        "rule_id",
+        "applicability_predicate",
+        "context_outcomes",
+        "unsupported_result",
+        "source_refs",
+        "tests"
+      ],
+      "prohibited_uses": [
+        "silent_generic_fallback",
+        "evaluation_without_bound_context"
+      ],
+      "cannot_override": ["hard"]
+    },
+    {
+      "class_id": "scoring",
+      "description": "A transparent diagnostic that contributes bounded points or findings after hard gates are evaluated and can never compensate for a hard failure.",
+      "classification_question": "Does the statement measure readiness or quality without independently authorizing release?",
+      "actionability": "diagnostic",
+      "enforcement_mode": "score_only",
+      "context_required": false,
+      "exception_policy": {
+        "allowed": false,
+        "required_evidence": []
+      },
+      "required_rule_fields": [
+        "rule_id",
+        "score_category",
+        "max_points",
+        "scoring_method",
+        "hard_gate_dependency",
+        "source_refs",
+        "tests"
+      ],
+      "prohibited_uses": [
+        "market_as_universal_ats_score",
+        "compensate_for_hard_failure"
+      ],
+      "cannot_override": ["hard"]
+    },
+    {
+      "class_id": "example",
+      "description": "Fictional or illustrative material that helps a reader understand a technique but is never executable product logic or reusable candidate content.",
+      "classification_question": "Is the material primarily an illustration, sample phrase, fictional fact pattern, or illustrative metric rather than a rule?",
+      "actionability": "non_actionable",
+      "enforcement_mode": "never_execute",
+      "context_required": false,
+      "exception_policy": {
+        "allowed": false,
+        "required_evidence": []
+      },
+      "required_rule_fields": [
+        "record_id",
+        "illustrative_purpose",
+        "source_refs",
+        "non_reuse_warning"
+      ],
+      "prohibited_uses": [
+        "candidate_content_generation",
+        "evidence_bank_population",
+        "metric_or_credential_reuse"
+      ],
+      "candidate_content_reuse": "forbidden"
+    },
+    {
+      "class_id": "explanatory",
+      "description": "Background, rationale, terminology, or process explanation that informs reviewers but does not itself create an enforceable condition or score.",
+      "classification_question": "Does the material explain why or how the system works without defining a testable behavior?",
+      "actionability": "non_actionable",
+      "enforcement_mode": "never_execute",
+      "context_required": false,
+      "exception_policy": {
+        "allowed": false,
+        "required_evidence": []
+      },
+      "required_rule_fields": [
+        "record_id",
+        "explanatory_purpose",
+        "source_refs"
+      ],
+      "prohibited_uses": [
+        "treat_as_release_gate_without_new_rule_review",
+        "treat_as_candidate_fact"
+      ],
+      "candidate_content_reuse": "not_applicable"
+    }
+  ],
+  "decision_sequence": [
+    {
+      "order": 1,
+      "question": "Is this fictional or illustrative material rather than a product behavior?",
+      "class_on_yes": "example"
+    },
+    {
+      "order": 2,
+      "question": "Is this background or rationale with no testable product behavior?",
+      "class_on_yes": "explanatory"
+    },
+    {
+      "order": 3,
+      "question": "Must violation block a claim, generation, export, or valid submission state?",
+      "class_on_yes": "hard"
+    },
+    {
+      "order": 4,
+      "question": "Does this only contribute a bounded diagnostic score or finding?",
+      "class_on_yes": "scoring"
+    },
+    {
+      "order": 5,
+      "question": "Does correct behavior require an explicit approved context outcome?",
+      "class_on_yes": "situational"
+    },
+    {
+      "order": 6,
+      "question": "Is this the preferred default with a documented and tested exception path?",
+      "class_on_yes": "strong_default"
+    }
+  ],
+  "context_axes": [
+    "mode",
+    "occupation_profile",
+    "market",
+    "country",
+    "sector",
+    "seniority",
+    "career_stage",
+    "evidence_state",
+    "vacancy_instruction",
+    "output_format",
+    "page_size",
+    "accessibility_need"
+  ],
+  "global_invariants": [
+    {
+      "invariant_id": "TAX-INV-001",
+      "statement": "Every source statement receives exactly one primary class; secondary tags may not change its enforcement semantics.",
+      "failure_result": "reject_record"
+    },
+    {
+      "invariant_id": "TAX-INV-002",
+      "statement": "Every classified record retains a source ID, page or section locator, and concise rationale.",
+      "failure_result": "reject_record"
+    },
+    {
+      "invariant_id": "TAX-INV-003",
+      "statement": "A hard failure blocks the affected release path and no diagnostic score may compensate for it.",
+      "failure_result": "block_release"
+    },
+    {
+      "invariant_id": "TAX-INV-004",
+      "statement": "Example content never becomes candidate evidence, a claim, a metric, a credential, or reusable generated wording.",
+      "failure_result": "block_content_use"
+    },
+    {
+      "invariant_id": "TAX-INV-005",
+      "statement": "A strong-default exception requires a named authority, applicable context, reason, and regression test.",
+      "failure_result": "apply_default"
+    },
+    {
+      "invariant_id": "TAX-INV-006",
+      "statement": "A situational rule evaluates only against approved bound context and fails visibly when no supported outcome exists.",
+      "failure_result": "unsupported"
+    },
+    {
+      "invariant_id": "TAX-INV-007",
+      "statement": "Explanatory guidance cannot become an enforcement condition without a versioned rule record and review.",
+      "failure_result": "reject_enforcement"
+    },
+    {
+      "invariant_id": "TAX-INV-008",
+      "statement": "Ambiguous classification fails closed for human rule review rather than choosing the most permissive class.",
+      "failure_result": "reject_until_human_review"
+    }
+  ],
+  "unclassified_result": "reject_until_human_review",
+  "change_policy": {
+    "silent_reclassification_forbidden": true,
+    "version_change_required": true,
+    "review_required": true
+  },
+  "source_references": [
+    {
+      "source_id": "HANDBOOK-1.0",
+      "pages": [2, 7, 21, 27, 28, 29],
+      "sections": [
+        "Scope and limits",
+        "The constraint hierarchy",
+        "Hard, strong, and situational rules",
+        "Non-negotiable truth rules",
+        "Responsible use of generative AI",
+        "The 100-point Resume Quality Index"
+      ],
+      "purpose": "Defines truth and privacy boundaries, class distinctions, example non-reuse, hard gates, and diagnostic scoring limits."
+    },
+    {
+      "source_id": "SPEC-1.3",
+      "pages": [16, 19, 20, 21],
+      "sections": [
+        "4.4 Rule categories",
+        "Stage 0 detailed implementation steps",
+        "Stage 0 precautions",
+        "Stage 0 exit gate"
+      ],
+      "purpose": "Requires the six-class taxonomy and machine-testable Stage 0 governance."
+    }
+  ]
+}
