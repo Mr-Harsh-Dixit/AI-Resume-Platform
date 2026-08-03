@@ -33,9 +33,24 @@
     {
       "id": "S0-01",
       "title": "Confirm commercial usage rights",
-      "state": "evidence_ready",
+      "state": "passed",
       "blocked_by": [],
-      "evidence": ["docs/stage-0/decisions/DEC-S0-001-HANDBOOK-RIGHTS.md"]
+      "builder": "Codex lead implementation agent",
+      "evidence": [
+        "docs/stage-0/decisions/DEC-S0-001-HANDBOOK-RIGHTS.md",
+        "docs/stage-0/evidence/S0-01-REVIEW.md"
+      ],
+      "review": {
+        "reviewer": "Mr-Harsh-Dixit - product owner and handbook author",
+        "verdict": "PASS",
+        "verdict_on": "2026-08-03",
+        "scope": "Handbook authorship and commercial operationalization rights only"
+      },
+      "github_checkpoint": {
+        "state": "passed",
+        "commit_sha": "aafec8b6f2d095da0b9a161d9cb97ad26062db7a",
+        "url": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/pull/1"
+      }
     },
     {
       "id": "S0-02",
@@ -130,7 +145,7 @@
     }
   ],
   "exit_criteria": [
-    {"id": "S0-EXIT-01", "state": "evidence_ready", "criterion": "Commercial use rights are confirmed or explicitly resolved by the product owner.", "blocked_by": []},
+    {"id": "S0-EXIT-01", "state": "passed", "criterion": "Commercial use rights are confirmed or explicitly resolved by the product owner.", "blocked_by": [], "evidence": ["docs/stage-0/evidence/S0-01-REVIEW.md"]},
     {"id": "S0-EXIT-02", "state": "not_started", "criterion": "Every MVP hard rule has a stable ID, source, and testable condition.", "blocked_by": ["S0-03", "S0-04"]},
     {"id": "S0-EXIT-03", "state": "in_review", "criterion": "General and Targeted mode boundaries are approved.", "blocked_by": []},
     {"id": "S0-EXIT-04", "state": "blocked", "criterion": "Every launch profile has sources, field-review approval, field rules, and representative fixtures.", "blocked_by": ["DEC-S0-003", "DEC-S0-004", "S0-06", "S0-07", "S0-13"]},
