@@ -5,16 +5,20 @@ on:
     paths:
       - ".github/workflows/stage0-control-plane.yml"
       - "docs/stage-0/**"
+      - "rulebook/**"
       - "tests/**"
       - "tools/verify_stage0_control_plane.py"
+      - "tools/verify_rule_taxonomy.py"
   push:
     branches:
       - main
     paths:
       - ".github/workflows/stage0-control-plane.yml"
       - "docs/stage-0/**"
+      - "rulebook/**"
       - "tests/**"
       - "tools/verify_stage0_control_plane.py"
+      - "tools/verify_rule_taxonomy.py"
 
 permissions:
   contents: read
@@ -43,3 +47,6 @@ jobs:
 
       - name: Verify Stage 0 status integrity
         run: python tools/verify_stage0_control_plane.py
+
+      - name: Verify rule taxonomy integrity
+        run: python tools/verify_rule_taxonomy.py
