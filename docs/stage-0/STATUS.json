@@ -87,6 +87,7 @@
         "docs/stage-0/RULE_TAXONOMY.md",
         "docs/stage-0/evidence/S0-03-BUILDER-EVIDENCE.md",
         "docs/stage-0/evidence/S0-03-REVIEW-FAIL-2026-08-03.md",
+        "docs/stage-0/evidence/S0-03-REVIEW-FAIL-2026-08-04.md",
         "rulebook/schemas/rule-taxonomy.schema.json",
         "rulebook/taxonomy/1.0.0/taxonomy.json",
         "rulebook/taxonomy/1.0.0/semantic-lock.json",
@@ -103,31 +104,64 @@
           "technical_verdict": "FAIL",
           "verdict_on": "2026-08-03",
           "evidence": "docs/stage-0/evidence/S0-03-REVIEW-FAIL-2026-08-03.md"
+        },
+        {
+          "reviewer": "Codex independent review instance - not the implementing agent",
+          "reviewed_commit": "3855d434d3d97639c5b066e02e9951e105060495",
+          "verdict": "FAIL",
+          "product_domain_verdict": "PASS",
+          "technical_verdict": "FAIL",
+          "verdict_on": "2026-08-04",
+          "evidence": "docs/stage-0/evidence/S0-03-REVIEW-FAIL-2026-08-04.md"
         }
       ],
-      "remediation": {
-        "cycle": 1,
-        "state": "evidence_ready",
-        "findings": [
-          "JSON Schema engine was not applied",
-          "Prompt and same-version semantic drift were not enforced",
-          "Source page, section, and checksum drift were accepted",
-          "Required negative regression paths were missing"
-        ],
-        "local_validation": {
-          "unit_tests": "PASS - 34 tests",
-          "stage0_control_plane": "PASS",
-          "taxonomy_schema_semantic_source_verifier": "PASS",
-          "reviewer_mutation_replay": "PASS - 7 of 7 rejected"
+      "remediation_history": [
+        {
+          "cycle": 1,
+          "state": "reviewed_failed",
+          "findings": [
+            "JSON Schema engine was not applied",
+            "Prompt and same-version semantic drift were not enforced",
+            "Source page, section, and checksum drift were accepted",
+            "Required negative regression paths were missing"
+          ],
+          "local_validation": {
+            "unit_tests": "PASS - 34 tests",
+            "stage0_control_plane": "PASS",
+            "taxonomy_schema_semantic_source_verifier": "PASS",
+            "reviewer_mutation_replay": "PASS - 7 of 7 rejected"
+          },
+          "published_candidate": {
+            "implementation_commit": "3c0717f888c16e4372260f1072b557697a581062",
+            "reviewed_head": "3855d434d3d97639c5b066e02e9951e105060495",
+            "pull_request_url": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/pull/5",
+            "ci_result": "PASS",
+            "ci_run_url": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/actions/runs/30843829537"
+          },
+          "review_outcome": {
+            "verdict": "FAIL",
+            "evidence": "docs/stage-0/evidence/S0-03-REVIEW-FAIL-2026-08-04.md"
+          }
         },
-        "published_candidate": {
-          "implementation_commit": "3c0717f888c16e4372260f1072b557697a581062",
-          "pull_request_url": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/pull/5",
-          "ci_result": "PASS",
-          "ci_run_url": "https://github.com/Mr-Harsh-Dixit/AI-Resume-Platform/actions/runs/30843704738"
-        },
-        "fresh_independent_review_required": true
-      }
+        {
+          "cycle": 2,
+          "state": "evidence_ready",
+          "finding": "Stage 0 precautions was mapped to rendered specification page 20 instead of page 21",
+          "source_verification": {
+            "source_sha256": "4afd26ce2d57362d8ab3e5fc334ee20a896dda5db844420fdf50ff8606e75b35",
+            "page_20": "Deliverables ends on this page",
+            "page_21": "Precautions begins on this page"
+          },
+          "local_validation": {
+            "unit_tests": "PASS - 35 tests",
+            "exact_precautions_locator": "PASS - page 21",
+            "stage0_control_plane": "PASS",
+            "taxonomy_schema_semantic_source_verifier": "PASS",
+            "whitespace_error_marker_check": "PASS"
+          }
+        }
+      ],
+      "fresh_independent_review_required": true
     },
     {
       "id": "S0-04",

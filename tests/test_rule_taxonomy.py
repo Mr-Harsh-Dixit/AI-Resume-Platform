@@ -182,10 +182,22 @@ class RuleTaxonomyTests(unittest.TestCase):
 
     def test_source_locator_index_same_version_drift_is_rejected(self) -> None:
         locator_index = copy.deepcopy(self.locator_index)
-        locator_index["verification"]["reviewed_on"] = "2026-08-04"
+        locator_index["verification"]["reviewed_on"] = "2026-08-05"
 
         with self.assertRaisesRegex(TAXONOMY.TaxonomyError, "locator index fingerprint mismatch"):
             self.validate(locator_index=locator_index)
+
+    def test_stage0_precautions_locator_is_exactly_page_21(self) -> None:
+        specification = next(
+            source for source in self.locator_index["sources"] if source["source_id"] == "SPEC-1.3"
+        )
+        precautions = next(
+            locator
+            for locator in specification["locators"]
+            if locator["section"] == "Stage 0 precautions"
+        )
+
+        self.assertEqual(precautions["pages"], [21])
 
 
 if __name__ == "__main__":

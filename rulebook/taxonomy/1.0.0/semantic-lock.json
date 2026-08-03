@@ -19,7 +19,7 @@
     "source_references"
   ],
   "semantic_sha256": "8162de5a1b7ada092047e0421f6984ca982f1cddd90e63419204e2a0075ef087",
-  "source_locator_index_sha256": "7d02897dfcbc9071b78468f17306a982414b03921269fde4910b2b00c8bee48d",
+  "source_locator_index_sha256": "1a491281fcae6a55b5f1be28816a99524ebb10f6cbb94519082f0cb58b01a3cc",
   "change_policy": {
     "same_version_semantic_change": "reject",
     "new_version_required": true,

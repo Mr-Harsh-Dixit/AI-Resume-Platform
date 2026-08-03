@@ -56,4 +56,4 @@ S0-03 does not:
 
 ## Review state
 
-Status: `evidence_ready`. The first independent review passed the product/domain design and failed the technical enforcement on commit `8f90f2a474bad9f95e47f33655f3847fc0e7694d`. Remediation adds actual Draft 2020-12 validation, prompt-authority controls, semantic locking, checksum binding, controlled locators, and negative regression tests. The taxonomy remains `candidate` until a fresh non-builder technical review and product-owner approval.
+Status: `evidence_ready`. The first independent review passed the product/domain design and failed technical enforcement on commit `8f90f2a474bad9f95e47f33655f3847fc0e7694d`. The next review confirmed those controls but failed commit `3855d434d3d97639c5b066e02e9951e105060495` because `Stage 0 precautions` was indexed to rendered page 20 instead of page 21. Remediation cycle 2 corrects and locks that locator. The taxonomy remains `candidate` until another fresh non-builder technical review and product-owner approval.

@@ -3,8 +3,8 @@
   "source_baseline_id": "S0-SOURCE-BASELINE-001",
   "verification": {
     "method": "manual_source_review",
-    "reviewed_on": "2026-08-03",
-    "evidence_path": "docs/stage-0/evidence/S0-03-REVIEW-FAIL-2026-08-03.md"
+    "reviewed_on": "2026-08-04",
+    "evidence_path": "docs/stage-0/evidence/S0-03-REVIEW-FAIL-2026-08-04.md"
   },
   "sources": [
     {
@@ -27,7 +27,7 @@
       "locators": [
         {"section": "4.4 Rule categories", "pages": [16]},
         {"section": "Stage 0 detailed implementation steps", "pages": [19, 20]},
-        {"section": "Stage 0 precautions", "pages": [20]},
+        {"section": "Stage 0 precautions", "pages": [21]},
         {"section": "Stage 0 exit gate", "pages": [21]}
       ]
     }
